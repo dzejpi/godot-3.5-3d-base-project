@@ -20,7 +20,7 @@ func _ready():
 		release_focus()
 
 
-func _process(delta):
+func _process(_delta):
 	if sound_on:
 		pass
 	else:

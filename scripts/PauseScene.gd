@@ -8,17 +8,19 @@ func _ready():
 	update_pause_state()
 
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("game_pause"):
 		if is_game_paused:
-			is_game_paused = false
+			GlobalVar.is_game_paused = false
 			update_pause_state()
 		else:
-			is_game_paused = true
+			GlobalVar.is_game_paused = true
 			update_pause_state()
 
 
 func update_pause_state():
+	is_game_paused = GlobalVar.is_game_paused
+	
 	if is_game_paused:
 		visible = true
 	else:
