@@ -16,7 +16,6 @@ func _process(delta):
 			time_out += (2 * delta)
 			transition_overlay_sprite.modulate.a = time_out
 		else:
-			GlobalVar.is_game_paused = false
 			get_tree().change_scene("res://scenes/GameSceneOne.tscn")
 
 

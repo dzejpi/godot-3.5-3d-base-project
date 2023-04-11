@@ -3,6 +3,8 @@ extends KinematicBody
 
 onready var player_head = $PlayerHead
 onready var ray = $PlayerHead/RayCast
+onready var pause_scene = $UI/Pause/PauseScene
+
 
 var speed = 8
 var jump = 8
@@ -21,18 +23,20 @@ var movement = Vector3()
 var gravity_vector = Vector3()
 
 var is_on_ground = true
-var is_options_menu_displayed = false
+var is_paused = false
 
 # Name of the observed object for debugging purposes
 var observed_object = "" 
 
 
 func _ready():
+	is_paused = false
+	pause_scene.is_game_paused = false
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 
 func _input(event):
-	if !is_options_menu_displayed:
+	if !pause_scene.is_game_paused:
 		if event is InputEventMouseMotion:
 			rotation_degrees.y -= event.relative.x * mouse_sensitivity / 10
 			player_head.rotation_degrees.x = clamp(player_head.rotation_degrees.x - event.relative.y * mouse_sensitivity / 10, -90, 90)
@@ -43,16 +47,12 @@ func _input(event):
 		direction = direction.normalized().rotated(Vector3.UP, rotation.y)
 	
 	# Handling the options menu
-	if Input.is_action_just_pressed("ui_cancel"):
-		if !GlobalVar.is_game_paused:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-			is_options_menu_displayed = true
-		else:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-			is_options_menu_displayed = false
+	if Input.is_action_just_pressed("game_pause"):
+		handle_pause_change()
 
 
 func _process(delta):
+	check_pause_update()
 	
 	# If player is looking at something
 	if ray.is_colliding():
@@ -96,3 +96,36 @@ func _physics_process(delta):
 	
 	move_and_slide(movement, Vector3.UP)
 	
+
+func check_pause_update():
+	if is_paused != pause_scene.is_game_paused:
+		handle_on_click_pause_change()
+
+
+func handle_on_click_pause_change():
+	if pause_scene.is_game_paused:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		is_paused = pause_scene.is_game_paused
+			
+		pause_scene.show()
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		is_paused = pause_scene.is_game_paused
+	
+		pause_scene.hide()
+
+
+func handle_pause_change():
+	if pause_scene.is_game_paused:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		pause_scene.is_game_paused = false
+		is_paused = pause_scene.is_game_paused
+			
+		pause_scene.hide()
+	else:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		pause_scene.is_game_paused = true
+		is_paused = pause_scene.is_game_paused
+	
+		pause_scene.show()
+
