@@ -20,13 +20,6 @@ func _ready():
 		release_focus()
 
 
-func _process(_delta):
-	if sound_on:
-		pass
-	else:
-		pass
-
-
 func _on_SoundButton_pressed():
 	if sound_on:
 		sound_on = false
