@@ -100,7 +100,7 @@ func _physics_process(delta):
 	movement.x = velocity.x + gravity_vector.x
 	movement.y = gravity_vector.y
 	
-	move_and_slide(movement, Vector3.UP)
+	var _player_movement = move_and_slide(movement, Vector3.UP)
 	
 
 func check_pause_update():
