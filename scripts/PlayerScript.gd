@@ -34,6 +34,7 @@ var observed_object = ""
 func _ready():
 	is_paused = false
 	pause_scene.is_game_paused = false
+	pause_scene.hide()
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	check_game_end()
 

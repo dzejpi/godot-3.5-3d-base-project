@@ -36,6 +36,7 @@ shape = SubResource( 2 )
 [node name="Pause" type="Node" parent="UI"]
 
 [node name="PauseScene" parent="UI/Pause" instance=ExtResource( 2 )]
+visible = false
 
 [node name="GameEnd" type="Node" parent="UI"]
 
