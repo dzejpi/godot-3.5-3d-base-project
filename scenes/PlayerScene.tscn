@@ -36,3 +36,5 @@ visible = false
 
 [node name="GameOverScene" parent="UI/GameEnd" instance=ExtResource( 3 )]
 visible = false
+
+[node name="PlayerUI" type="Node2D" parent="UI"]

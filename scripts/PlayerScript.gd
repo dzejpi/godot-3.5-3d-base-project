@@ -3,6 +3,7 @@ extends KinematicBody
 
 onready var player_head = $PlayerHead
 onready var ray = $PlayerHead/RayCast
+onready var player_ui = $UI/PlayerUI
 onready var pause_scene = $UI/Pause/PauseScene
 onready var game_over_scene = $UI/GameEnd/GameOverScene
 
@@ -114,11 +115,13 @@ func handle_on_click_pause_change():
 		is_paused = pause_scene.is_game_paused
 			
 		pause_scene.show()
+		player_ui.hide()
 	else:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		is_paused = pause_scene.is_game_paused
 	
 		pause_scene.hide()
+		player_ui.show()
 
 
 func handle_pause_change():
@@ -128,12 +131,14 @@ func handle_pause_change():
 		is_paused = pause_scene.is_game_paused
 			
 		pause_scene.hide()
+		player_ui.show()
 	else:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		pause_scene.is_game_paused = true
 		is_paused = pause_scene.is_game_paused
 	
 		pause_scene.show()
+		player_ui.hide()
 
 
 func check_game_end():
@@ -142,5 +147,6 @@ func check_game_end():
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		pause_scene.is_game_paused = false
 		pause_scene.hide()
+		player_ui.hide()
 	else:
 		game_over_scene.hide()
