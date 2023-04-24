@@ -12,7 +12,8 @@ func _process(delta):
 			time_out += (2 * delta)
 			transition_overlay_sprite.modulate.a = time_out
 		else:
-			get_tree().change_scene("res://scenes/MainMenuScene.tscn")
+			if get_tree().change_scene("res://scenes/MainMenuScene.tscn") != OK:
+				print("An unexpected error happened when trying to switch to the Main menu scene.")
 
 
 func _on_BackToMenuButton_pressed():

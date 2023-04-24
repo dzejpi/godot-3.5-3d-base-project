@@ -12,7 +12,8 @@ func _process(delta):
 			time_out += (2 * delta)
 			transition_overlay_sprite.modulate.a = time_out
 		else:
-			get_tree().change_scene("res://scenes/GameSceneOne.tscn")
+			if get_tree().change_scene("res://scenes/GameSceneOne.tscn"):
+				print("An unexpected error happened when trying to switch to the Game scene.")
 
 
 func _on_NewGameButton_pressed():
