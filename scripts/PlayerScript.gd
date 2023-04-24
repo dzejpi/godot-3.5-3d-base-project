@@ -56,7 +56,7 @@ func _input(event):
 			handle_pause_change()
 
 
-func _process(delta):
+func _process(_delta):
 	check_game_end()
 	check_pause_update()
 	
