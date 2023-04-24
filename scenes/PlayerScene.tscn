@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scripts/PlayerScript.gd" type="Script" id=1]
 [ext_resource path="res://scenes/PauseScene.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/GameOverScene.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.5
@@ -35,4 +36,8 @@ shape = SubResource( 2 )
 [node name="Pause" type="Node" parent="UI"]
 
 [node name="PauseScene" parent="UI/Pause" instance=ExtResource( 2 )]
+
+[node name="GameEnd" type="Node" parent="UI"]
+
+[node name="GameOverScene" parent="UI/GameEnd" instance=ExtResource( 3 )]
 visible = false

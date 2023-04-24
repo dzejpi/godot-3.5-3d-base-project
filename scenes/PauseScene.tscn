@@ -88,9 +88,6 @@ texture_hover = ExtResource( 5 )
 texture_disabled = ExtResource( 1 )
 texture_focused = ExtResource( 2 )
 script = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="MainMenuLabel" type="Label" parent="MainMenuButton"]
 margin_right = 256.0

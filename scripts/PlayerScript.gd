@@ -4,7 +4,9 @@ extends KinematicBody
 onready var player_head = $PlayerHead
 onready var ray = $PlayerHead/RayCast
 onready var pause_scene = $UI/Pause/PauseScene
+onready var game_over_scene = $UI/GameEnd/GameOverScene
 
+var is_game_over = false
 
 var speed = 8
 var jump = 8
@@ -33,10 +35,11 @@ func _ready():
 	is_paused = false
 	pause_scene.is_game_paused = false
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	check_game_end()
 
 
 func _input(event):
-	if !pause_scene.is_game_paused:
+	if !pause_scene.is_game_paused && !is_game_over:
 		if event is InputEventMouseMotion:
 			rotation_degrees.y -= event.relative.x * mouse_sensitivity / 10
 			player_head.rotation_degrees.x = clamp(player_head.rotation_degrees.x - event.relative.y * mouse_sensitivity / 10, -90, 90)
@@ -48,10 +51,12 @@ func _input(event):
 	
 	# Handling the options menu
 	if Input.is_action_just_pressed("game_pause"):
-		handle_pause_change()
+		if !is_game_over:
+			handle_pause_change()
 
 
 func _process(delta):
+	check_game_end()
 	check_pause_update()
 	
 	# If player is looking at something
@@ -129,3 +134,12 @@ func handle_pause_change():
 	
 		pause_scene.show()
 
+
+func check_game_end():
+	if is_game_over:
+		game_over_scene.show()
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		pause_scene.is_game_paused = false
+		pause_scene.hide()
+	else:
+		game_over_scene.hide()
