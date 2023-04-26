@@ -88,6 +88,9 @@ func _physics_process(delta):
 	if is_on_floor():
 		gravity_vector = -get_floor_normal() * slide_prevention
 		acceleration = ground_acceleration
+		if !is_on_ground:
+			animation_player.play("Jump Land")
+		
 		is_on_ground = true
 	else:
 		if is_on_ground:
@@ -98,7 +101,6 @@ func _physics_process(delta):
 			acceleration = air_acceleration
 	
 	if Input.is_action_just_pressed("move_jump") and is_on_floor():
-		animation_player.play("Jump")
 		is_on_ground = false
 		gravity_vector = Vector3.UP * jump
 
