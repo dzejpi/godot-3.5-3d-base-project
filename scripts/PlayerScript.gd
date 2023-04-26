@@ -6,6 +6,8 @@ onready var ray = $PlayerHead/RayCast
 onready var player_ui = $UI/PlayerUI
 onready var pause_scene = $UI/Pause/PauseScene
 onready var game_over_scene = $UI/GameEnd/GameOverScene
+onready var animation_player = $PlayerHead/PlayerCamera/AnimationPlayer
+
 
 var is_game_over = false
 
@@ -102,6 +104,10 @@ func _physics_process(delta):
 	movement.y = gravity_vector.y
 	
 	var _player_movement = move_and_slide(movement, Vector3.UP)
+	
+	if !is_game_over && !is_paused:
+		if direction != Vector3():
+			animation_player.play("Head Bob")
 	
 
 func check_pause_update():
