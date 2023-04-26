@@ -89,8 +89,9 @@ func _physics_process(delta):
 		else:
 			gravity_vector += Vector3.DOWN * gravity * delta
 			acceleration = air_acceleration
-
+	
 	if Input.is_action_just_pressed("move_jump") and is_on_floor():
+		animation_player.play("Jump")
 		is_on_ground = false
 		gravity_vector = Vector3.UP * jump
 
