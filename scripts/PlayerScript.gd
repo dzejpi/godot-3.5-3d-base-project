@@ -11,8 +11,8 @@ onready var animation_player = $PlayerHead/PlayerCamera/AnimationPlayer
 
 var is_game_over = false
 
-var speed = 8
-var jump = 8
+var speed = 6
+var jump = 6
 var gravity = 16
 
 var ground_acceleration = 8
