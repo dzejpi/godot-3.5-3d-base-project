@@ -189,5 +189,5 @@ func decrease_fov():
 		change_fov(current_fov)
 
 
-func change_fov(current_fov):
-	player_camera.fov = current_fov
+func change_fov(player_current_fov):
+	player_camera.fov = player_current_fov
