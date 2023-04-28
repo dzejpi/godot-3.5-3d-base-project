@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://scripts/PlayerScript.gd" type="Script" id=1]
 [ext_resource path="res://scenes/PauseScene.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/GameOverScene.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/TypewriterDialogScene.tscn" type="PackedScene" id=4]
 
 [sub_resource type="Animation" id=2]
 resource_name = "Head Bob"
@@ -103,3 +104,5 @@ visible = false
 visible = false
 
 [node name="PlayerUI" type="Node2D" parent="UI"]
+
+[node name="TypewriterDialog" parent="UI/PlayerUI" instance=ExtResource( 4 )]

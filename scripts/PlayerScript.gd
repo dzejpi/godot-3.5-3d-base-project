@@ -3,12 +3,15 @@ extends KinematicBody
 
 onready var player_head = $PlayerHead
 onready var ray = $PlayerHead/RayCast
-onready var player_ui = $UI/PlayerUI
+
 onready var pause_scene = $UI/Pause/PauseScene
 onready var game_over_scene = $UI/GameEnd/GameOverScene
 onready var animation_player = $PlayerHead/PlayerCamera/AnimationPlayer
 onready var player_camera = $PlayerHead/PlayerCamera
 
+# UI
+onready var player_ui = $UI/PlayerUI
+onready var typewriter_dialog = $UI/PlayerUI/TypewriterDialog
 
 var is_game_over = false
 

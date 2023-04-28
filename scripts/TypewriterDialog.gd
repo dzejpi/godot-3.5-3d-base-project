@@ -1,26 +1,26 @@
 extends Node2D
 
 
+onready var text_label = $TextBgSprite/TextLabel
+
 var letter_change_speed = 16
 var displayed_text_timeout = 0
 var dialog_timeout = 0
 var dialog_timeout_time = 1
 var dialog_switch_timeout = 0
 var dialog_switch_timeout_time = 4
-var dialog_text_array = ["This is the first text.", "This is the second one.", "And the last, third one."]
+var dialog_text_array = ["Placeholder text."]
 
 var displayed_dialog_array_number = 0
 var currently_displayed_character = 0
 var current_dialog = ""
 
-var processing_dialog = true
+var processing_dialog = false
 var text_fully_displayed = false
-
-onready var text_label = $TextBgSprite/TextLabel
 
 
 func _ready():
-	visible = true
+	visible = false
 
 
 func _process(delta):
@@ -30,7 +30,8 @@ func _process(delta):
 		visible = false
 
 
-func start_dialog(delta):
+func start_dialog(dialog_array, delta):
+	dialog_text_array = dialog_array
 	visible = true
 	processing_dialog = true
 	displayed_dialog_array_number = 0
