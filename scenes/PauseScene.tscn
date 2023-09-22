@@ -81,7 +81,7 @@ valign = 1
 [node name="MainMenuButton" type="TextureButton" parent="."]
 margin_top = 288.0
 margin_right = 256.0
-margin_bottom = 64.0
+margin_bottom = 352.0
 texture_normal = ExtResource( 3 )
 texture_pressed = ExtResource( 6 )
 texture_hover = ExtResource( 5 )

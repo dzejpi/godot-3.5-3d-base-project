@@ -23,9 +23,6 @@ texture_hover = ExtResource( 4 )
 texture_disabled = ExtResource( 1 )
 texture_focused = ExtResource( 2 )
 script = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="NewGameLabel" type="Label" parent="CreditsButton/BackToMenuButton"]
 margin_right = 256.0

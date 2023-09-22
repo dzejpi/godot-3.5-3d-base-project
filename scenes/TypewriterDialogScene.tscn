@@ -19,9 +19,6 @@ margin_right = 1136.0
 margin_bottom = 176.0
 text = "Dialog text placeholder."
 autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="CharacterSpriteBg" type="Sprite" parent="."]
 visible = false

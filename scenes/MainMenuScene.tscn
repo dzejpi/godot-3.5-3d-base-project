@@ -25,9 +25,6 @@ texture_hover = ExtResource( 4 )
 texture_disabled = ExtResource( 3 )
 texture_focused = ExtResource( 5 )
 script = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="NewGameLabel" type="Label" parent="MenuButtons/NewGameButton"]
 margin_right = 256.0
@@ -107,7 +104,7 @@ valign = 1
 [node name="QuitGameButton" type="TextureButton" parent="MenuButtons"]
 margin_top = 384.0
 margin_right = 256.0
-margin_bottom = 320.0
+margin_bottom = 448.0
 texture_normal = ExtResource( 1 )
 texture_pressed = ExtResource( 2 )
 texture_hover = ExtResource( 4 )
