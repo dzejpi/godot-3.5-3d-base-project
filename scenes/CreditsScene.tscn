@@ -11,12 +11,12 @@
 [node name="CreditsScene" type="Node2D"]
 
 [node name="CreditsButton" type="Node2D" parent="."]
+position = Vector2( 640, 592 )
 
 [node name="BackToMenuButton" type="TextureButton" parent="CreditsButton"]
-margin_left = 512.0
-margin_top = 592.0
-margin_right = 768.0
-margin_bottom = 656.0
+margin_left = -128.0
+margin_right = 128.0
+margin_bottom = 64.0
 texture_normal = ExtResource( 3 )
 texture_pressed = ExtResource( 5 )
 texture_hover = ExtResource( 4 )
@@ -42,9 +42,6 @@ margin_bottom = 528.0
 text = "Credits text here."
 align = 1
 valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Background" type="Node2D" parent="."]
 
