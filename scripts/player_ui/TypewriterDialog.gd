@@ -16,6 +16,7 @@ var letter_timeout_base_time = 1
 # Timeout for another dialog to appear
 var dialog_switch_timeout_current = 0
 var dialog_switch_timeout_base_time = 1
+var dialog_switch_timeout_printed = false
 
 # Which line out of all lines is displayed
 var currently_displayed_dialog_from_array = 0
@@ -35,7 +36,14 @@ func _process(delta):
 	else:
 		visible = false
 
-	print("Dialog switch timeout current:" + str(dialog_switch_timeout_current))
+	if dialog_switch_timeout_current == 0:
+		if !dialog_switch_timeout_printed:
+			print("Dialog switch timeout current: " + str(dialog_switch_timeout_current))
+		dialog_switch_timeout_printed = true
+	else:
+		if dialog_switch_timeout_printed:
+			dialog_switch_timeout_printed = false
+
 
 func start_dialog(dialog_array, delta):
 	dialog_text = dialog_array
