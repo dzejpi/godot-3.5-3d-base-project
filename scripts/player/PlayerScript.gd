@@ -15,12 +15,6 @@ onready var player_camera = $PlayerHead/PlayerCamera
 onready var player_ui = $UI/PlayerUI
 onready var typewriter_dialog = $UI/PlayerUI/TypewriterDialog
 
-# Transition
-onready var transition_overlay_sprite = transition_overlay.get_node("TransitionSprite")
-
-var transition_countdown = 0
-var transition_displayed = false
-
 var is_game_over = false
 var is_game_won = false
 
@@ -58,6 +52,7 @@ func _ready():
 	pause_scene.is_game_paused = false
 	pause_scene.hide()
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	transition_overlay.fade_out()
 	check_game_end()
 
 
@@ -78,10 +73,7 @@ func _input(event):
 			handle_pause_change()
 
 
-func _process(delta):
-	if !transition_displayed:
-		handle_transition(delta)
-		
+func _process(_delta):
 	check_game_end()
 	check_pause_update()
 	
@@ -210,11 +202,3 @@ func decrease_fov():
 
 func change_fov(player_current_fov):
 	player_camera.fov = player_current_fov
-
-
-func handle_transition(delta):
-	if transition_countdown < 1:
-			transition_countdown += (2 * delta)
-			transition_overlay_sprite.modulate.a = (1 - transition_countdown)
-	else:
-		transition_displayed = true

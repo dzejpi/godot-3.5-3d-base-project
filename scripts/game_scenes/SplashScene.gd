@@ -3,7 +3,6 @@ extends Node2D
 
 onready var dev_logo_sprite = $DevLogoSprite
 onready var jam_logo_sprite = $JamLogoSprite
-onready var transition_overlay_sprite = transition_overlay.get_node("TransitionSprite")
 
 var screen_width = OS.window_size.x
 var screen_height = OS.window_size.y
@@ -15,6 +14,7 @@ var logo_show_off_speed = 1
 var logo_show_off_timer = 0
 var logo_show_off = false
 var logo_displaying = true
+var going_to_main_menu = false
 
 # Startup delay
 var startup_delay = true
@@ -28,6 +28,8 @@ var skip_splash = false
 
 
 func _ready():
+	transition_overlay.fade_out()
+	
 	# Set the sprite into the center according to the window size
 	dev_logo_sprite.position.x = (screen_width / 2)
 	dev_logo_sprite.position.y = (screen_height / 2)
@@ -107,10 +109,11 @@ func process_jam_logo(delta):
 			logo_displaying = true
 
 
-func go_to_main_menu(delta):
-	if transition_time_out < 1:
-		transition_time_out += (2 * delta)
-		transition_overlay_sprite.modulate.a = transition_time_out
-	else:
+func go_to_main_menu(_delta):
+	if !going_to_main_menu:
+		transition_overlay.fade_in()
+		going_to_main_menu = true
+	
+	if transition_overlay.transition_completed:
 		if get_tree().change_scene("res://scenes/game_scenes/MainMenuScene.tscn") != OK:
 			print("An unexpected error happened when trying to switch to the Main menu scene.")

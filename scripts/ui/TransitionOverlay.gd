@@ -4,19 +4,43 @@ extends Node2D
 var time_out = 0
 onready var transition_overlay_sprite = $TransitionSprite
 
+var transition_time_out = 0
+var transition_completed = true
+var transition_in = false
+
 
 func _ready():
-	transition_overlay_sprite.modulate.a = 1
+	transition_overlay_sprite.modulate.a = 0
 	transition_overlay_sprite.scale.x = OS.window_size.x
 	transition_overlay_sprite.scale.y = OS.window_size.y
 
 
 func _process(delta):
-	
 	# Redraw if necessary
-	transition_overlay_sprite.scale.x = OS.window_size.x
-	transition_overlay_sprite.scale.y = OS.window_size.y
+	if transition_overlay_sprite.scale.x != OS.window_size.x:
+		transition_overlay_sprite.scale.x = OS.window_size.x
+	if transition_overlay_sprite.scale.y != OS.window_size.y:
+		transition_overlay_sprite.scale.y = OS.window_size.y
+	
+	# Handle screen transition
+	if !transition_completed:
+		if transition_time_out < 1:
+			transition_time_out += (2 * delta)
+			if transition_in:
+				transition_overlay_sprite.modulate.a = transition_time_out
+			else:
+				transition_overlay_sprite.modulate.a = (1 - transition_time_out)
+		else:
+			transition_completed = true
 
-	if time_out < 1:
-		time_out += (2 * delta)
-		transition_overlay_sprite.modulate.a = 1 - time_out
+
+func fade_in():
+	transition_completed = false
+	transition_time_out = 0
+	transition_in = true
+	
+	
+func fade_out():
+	transition_completed = false
+	transition_time_out = 0
+	transition_in = false
