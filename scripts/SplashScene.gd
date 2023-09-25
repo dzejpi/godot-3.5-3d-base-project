@@ -3,7 +3,7 @@ extends Node2D
 
 onready var dev_logo_sprite = $DevLogoSprite
 onready var jam_logo_sprite = $JamLogoSprite
-onready var transition_overlay_sprite = $TransitionOverlay/TransitionSprite
+onready var transition_overlay_sprite = transition_overlay.get_node("TransitionSprite")
 
 var screen_width = OS.window_size.x
 var screen_height = OS.window_size.y
@@ -112,4 +112,5 @@ func go_to_main_menu(delta):
 		transition_time_out += (2 * delta)
 		transition_overlay_sprite.modulate.a = transition_time_out
 	else:
-		get_tree().change_scene("res://scenes/MainMenuScene.tscn")
+		if get_tree().change_scene("res://scenes/game_scenes/MainMenuScene.tscn") != OK:
+			print("An unexpected error happened when trying to switch to the Main menu scene.")

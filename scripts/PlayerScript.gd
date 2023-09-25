@@ -15,8 +15,14 @@ onready var player_camera = $PlayerHead/PlayerCamera
 onready var player_ui = $UI/PlayerUI
 onready var typewriter_dialog = $UI/PlayerUI/TypewriterDialog
 
+# Transition
+onready var transition_overlay_sprite = transition_overlay.get_node("TransitionSprite")
+
+var transition_countdown = 0
+var transition_displayed = false
+
 var is_game_over = false
-var is_game_won = true
+var is_game_won = false
 
 var speed = 6
 var jump = 6
@@ -56,7 +62,7 @@ func _ready():
 
 
 func _input(event):
-	if !pause_scene.is_game_paused && !is_game_over:
+	if !pause_scene.is_game_paused && !is_game_over && !is_game_won:
 		if event is InputEventMouseMotion:
 			rotation_degrees.y -= event.relative.x * mouse_sensitivity / 10
 			player_head.rotation_degrees.x = clamp(player_head.rotation_degrees.x - event.relative.y * mouse_sensitivity / 10, -90, 90)
@@ -68,11 +74,14 @@ func _input(event):
 	
 	# Handling the options menu
 	if Input.is_action_just_pressed("game_pause"):
-		if !is_game_over:
+		if !is_game_over && !is_game_won:
 			handle_pause_change()
 
 
-func _process(_delta):
+func _process(delta):
+	if !transition_displayed:
+		handle_transition(delta)
+		
 	check_game_end()
 	check_pause_update()
 	
@@ -123,7 +132,7 @@ func _physics_process(delta):
 	
 	var _player_movement = move_and_slide(movement, Vector3.UP)
 	
-	if !is_game_over && !is_paused:
+	if !is_game_over && !is_game_won && !is_paused:
 		if direction != Vector3():
 			animation_player.play("Head Bob")
 	
@@ -201,3 +210,11 @@ func decrease_fov():
 
 func change_fov(player_current_fov):
 	player_camera.fov = player_current_fov
+
+
+func handle_transition(delta):
+	if transition_countdown < 1:
+			transition_countdown += (2 * delta)
+			transition_overlay_sprite.modulate.a = (1 - transition_countdown)
+	else:
+		transition_displayed = true

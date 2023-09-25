@@ -1,9 +1,10 @@
 extends TextureButton
 
 
+var time_out = 0
 var platform = OS.get_name()
 var button_pressed = false
-onready var transition_overlay = $"../../TransitionOverlay"
+onready var transition_overlay_sprite = transition_overlay.get_node("TransitionSprite")
 
 
 func _ready():
@@ -14,10 +15,14 @@ func _ready():
 
 func _process(delta):
 	if button_pressed:
-		if transition_overlay.time_out == 1:
-			release_focus()
-			get_tree().quit()
+		if button_pressed:
+			if time_out < 1:
+				time_out += (2 * delta)
+				transition_overlay_sprite.modulate.a = time_out
+			else:
+				release_focus()
+				get_tree().quit()
+
 
 func _on_QuitGameButton_pressed():
 	button_pressed = true
-	transition_overlay.time_out = 1

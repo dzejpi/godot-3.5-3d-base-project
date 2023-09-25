@@ -12,12 +12,13 @@ config_version=4
 
 config/name="Base 3D Sample Project"
 config/description="Base project for your needs."
-run/main_scene="res://scenes/SplashScene.tscn"
+run/main_scene="res://scenes/game_scenes/SplashScene.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
-global_var="*res://scenes/GlobalScene.tscn"
+global_var="*res://scenes/global/GlobalScene.tscn"
+transition_overlay="*res://scenes/ui/TransitionOverlay.tscn"
 
 [display]
 

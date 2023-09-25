@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scripts/MainMenuButton.gd" type="Script" id=1]
 [ext_resource path="res://assets/visual/ui/main_menu/menu_btn_focused.png" type="Texture" id=2]
@@ -7,15 +7,14 @@
 [ext_resource path="res://assets/visual/ui/main_menu/menu_btn_hover.png" type="Texture" id=5]
 [ext_resource path="res://assets/visual/ui/main_menu/menu_btn_pressed.png" type="Texture" id=6]
 [ext_resource path="res://scripts/QuitGameButton.gd" type="Script" id=7]
-[ext_resource path="res://scenes/TransitionOverlay.tscn" type="PackedScene" id=8]
 
-[node name="GameWonScene" type="Node2D"]
+[node name="GameOverScene" type="Node2D"]
 
-[node name="GameWonLabel" type="Label" parent="."]
+[node name="GameOverLabel" type="Label" parent="."]
 margin_top = 32.0
 margin_right = 1280.0
 margin_bottom = 96.0
-text = "You won!"
+text = "Game over!"
 align = 1
 valign = 1
 
@@ -63,8 +62,6 @@ margin_bottom = 64.0
 text = "Quit Game"
 align = 1
 valign = 1
-
-[node name="TransitionOverlay" parent="." instance=ExtResource( 8 )]
 
 [connection signal="pressed" from="Buttons/MainMenu/MainMenuButton" to="Buttons/MainMenu/MainMenuButton" method="_on_MainMenuButton_pressed"]
 [connection signal="pressed" from="Buttons/QuitGame/QuitGameButton" to="Buttons/QuitGame/QuitGameButton" method="_on_QuitGameButton_pressed"]

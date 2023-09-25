@@ -3,7 +3,7 @@ extends TextureButton
 
 var time_out = 0
 var button_pressed = false
-onready var transition_overlay_sprite = $"../../TransitionOverlay/TransitionSprite"
+onready var transition_overlay_sprite = transition_overlay.get_node("TransitionSprite")
 
 
 func _process(delta):
@@ -12,7 +12,7 @@ func _process(delta):
 			time_out += (2 * delta)
 			transition_overlay_sprite.modulate.a = time_out
 		else:
-			if get_tree().change_scene("res://scenes/GameSceneOne.tscn"):
+			if get_tree().change_scene("res://scenes/game_scenes/GameSceneOne.tscn"):
 				print("An unexpected error happened when trying to switch to the Game scene.")
 
 

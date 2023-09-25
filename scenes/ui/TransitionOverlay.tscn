@@ -4,6 +4,7 @@
 [ext_resource path="res://scripts/TransitionOverlay.gd" type="Script" id=2]
 
 [node name="TransitionOverlay" type="Node2D"]
+z_index = 1
 script = ExtResource( 2 )
 
 [node name="TransitionSprite" type="Sprite" parent="."]
