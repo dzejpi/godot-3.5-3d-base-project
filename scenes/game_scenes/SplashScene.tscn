@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://scripts/SplashScene.gd" type="Script" id=2]
+[ext_resource path="res://scripts/game_scenes/SplashScene.gd" type="Script" id=2]
 [ext_resource path="res://assets/visual/ui/logos/logo-jam.png" type="Texture" id=3]
 [ext_resource path="res://assets/visual/ui/logos/logo-main.png" type="Texture" id=4]
 
