@@ -9,13 +9,13 @@
 [ext_resource path="res://scripts/QuitGameButton.gd" type="Script" id=7]
 [ext_resource path="res://scenes/TransitionOverlay.tscn" type="PackedScene" id=8]
 
-[node name="GameOverScene" type="Node2D"]
+[node name="GameWonScene" type="Node2D"]
 
-[node name="GameOverLabel" type="Label" parent="."]
+[node name="GameWonLabel" type="Label" parent="."]
 margin_top = 32.0
 margin_right = 1280.0
 margin_bottom = 96.0
-text = "Game over!"
+text = "You won!"
 align = 1
 valign = 1
 

@@ -50,9 +50,6 @@ texture_hover = ExtResource( 4 )
 texture_disabled = ExtResource( 3 )
 texture_focused = ExtResource( 5 )
 script = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="MusicLabel" type="Label" parent="MenuButtons/MusicButton"]
 margin_right = 256.0

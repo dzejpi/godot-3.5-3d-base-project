@@ -6,6 +6,8 @@ onready var ray = $PlayerHead/RayCast
 
 onready var pause_scene = $UI/Pause/PauseScene
 onready var game_over_scene = $UI/GameEnd/GameOverScene
+onready var game_won_scene = $UI/GameEnd/GameWonScene
+
 onready var animation_player = $PlayerHead/PlayerCamera/AnimationPlayer
 onready var player_camera = $PlayerHead/PlayerCamera
 
@@ -14,6 +16,7 @@ onready var player_ui = $UI/PlayerUI
 onready var typewriter_dialog = $UI/PlayerUI/TypewriterDialog
 
 var is_game_over = false
+var is_game_won = true
 
 var speed = 6
 var jump = 6
@@ -163,8 +166,15 @@ func handle_pause_change():
 
 
 func check_game_end():
+	# Game is over in both cases - when player loses or wins
 	if is_game_over:
 		game_over_scene.show()
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		pause_scene.is_game_paused = false
+		pause_scene.hide()
+		player_ui.hide()
+	elif is_game_won:
+		game_won_scene.show()
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		pause_scene.is_game_paused = false
 		pause_scene.hide()
