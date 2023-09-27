@@ -56,8 +56,12 @@ func _ready():
 	check_game_end()
 
 
-func _input(event):
+func _input(event):	
 	if !pause_scene.is_game_paused && !is_game_over && !is_game_won:
+		
+		# Hack that mostly forces the game to capture cursor in HTML5 after player presses Escape
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		
 		if event is InputEventMouseMotion:
 			rotation_degrees.y -= event.relative.x * mouse_sensitivity / 10
 			player_head.rotation_degrees.x = clamp(player_head.rotation_degrees.x - event.relative.y * mouse_sensitivity / 10, -90, 90)
@@ -66,7 +70,7 @@ func _input(event):
 		direction.z = -Input.get_action_strength("move_up") + Input.get_action_strength("move_down")
 		direction.x = -Input.get_action_strength("move_left") + Input.get_action_strength("move_right")
 		direction = direction.normalized().rotated(Vector3.UP, rotation.y)
-	
+		
 	# Handling the options menu
 	if Input.is_action_just_pressed("game_pause"):
 		if !is_game_over && !is_game_won:
