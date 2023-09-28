@@ -25,7 +25,7 @@ var mouse_sensitivity = 0.75
 var jump = 100
 
 var basic_fov = 90
-var increased_fov = 92
+var increased_fov = 94
 var current_fov = basic_fov
 
 var is_paused = false
@@ -82,38 +82,54 @@ func _input(event):
 	
 
 func _physics_process(delta):
+	var move_direction_forward = Vector3(0, 0, 0)
 	var move_direction = Vector3(0, 0, 0)
 	
-	if Input.is_action_pressed("move_sprint"):
-		if Input.is_action_pressed("move_up"):
-			increase_fov()
-			current_speed = increased_speed
+	if !pause_scene.is_game_paused && !is_game_over && !is_game_won:
+		# Normalisation is squishing the values weirdly when sprinting
+		# Therefore, the logic for moving the player forward is separate
+		if Input.is_action_pressed("move_sprint"):
+			if Input.is_action_pressed("move_up"):
+				increase_fov()
+				current_speed = increased_speed
+			else:
+				current_speed = default_speed
+				decrease_fov()
 		else:
 			current_speed = default_speed
 			decrease_fov()
-	else:
-		current_speed = default_speed
-		decrease_fov()
-	
-	if Input.is_action_pressed("move_up"):
-		move_direction += -transform.basis.z
-	if Input.is_action_pressed("move_down"):
-		move_direction += transform.basis.z
-	if Input.is_action_pressed("move_left"):
-		move_direction += -transform.basis.x
-	if Input.is_action_pressed("move_right"):
-		move_direction += transform.basis.x
-	if Input.is_action_pressed("move_jump"):
-		move_direction += transform.basis.y
-	if Input.is_action_pressed("move_crouch"):
-		move_direction += -transform.basis.y
-	
-	move_direction = move_direction.normalized()
-	
-	var motion = move_direction * current_speed * delta
-	motion += gravity * delta
+		
+		if Input.is_action_pressed("move_up"):
+			move_direction_forward += -transform.basis.z
+			
+		move_direction_forward = move_direction_forward.normalized()
+		
+		var motion_forward = move_direction_forward * current_speed * delta
+		motion_forward += gravity * delta
 
-	motion = move_and_slide(motion, Vector3(0, 1, 0))
+		motion_forward = move_and_slide(motion_forward, Vector3(0, 1, 0))
+		
+		# Set the default speed back so that the sprint does not have influence on other directions
+		current_speed = default_speed
+		
+		# Separate logic for other directions
+		if Input.is_action_pressed("move_down"):
+			move_direction += transform.basis.z
+		if Input.is_action_pressed("move_left"):
+			move_direction += -transform.basis.x
+		if Input.is_action_pressed("move_right"):
+			move_direction += transform.basis.x
+		if Input.is_action_pressed("move_jump"):
+			move_direction += transform.basis.y
+		if Input.is_action_pressed("move_crouch"):
+			move_direction += -transform.basis.y
+		
+		move_direction = move_direction.normalized()
+		
+		var motion = move_direction * current_speed * delta
+		motion += gravity * delta
+
+		motion = move_and_slide(motion, Vector3(0, 1, 0))
 
 
 func check_pause_update():
@@ -183,7 +199,7 @@ func decrease_fov():
 	current_fov = player_camera.fov
 	
 	if current_fov > basic_fov:
-		current_fov -= 0.025
+		current_fov -= 0.1
 		change_fov(current_fov)
 
 
