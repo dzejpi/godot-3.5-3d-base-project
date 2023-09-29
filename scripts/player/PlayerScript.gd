@@ -14,6 +14,8 @@ onready var player_camera = $PlayerHead/PlayerCamera
 # UI
 onready var player_ui = $UI/PlayerUI
 onready var typewriter_dialog = $UI/PlayerUI/TypewriterDialog
+onready var tooltip = $UI/PlayerUI/Tooltip
+
 
 var is_game_over = false
 var is_game_won = false
@@ -93,7 +95,7 @@ func _process(_delta):
 		if collision_object != observed_object:
 			observed_object = collision_object
 			print("Player is looking at: nothing.")
-	
+
 
 func _physics_process(delta):
 	if is_on_floor():
@@ -131,7 +133,7 @@ func _physics_process(delta):
 	if !is_game_over && !is_game_won && !is_paused:
 		if direction != Vector3():
 			animation_player.play("Head Bob")
-	
+
 
 func check_pause_update():
 	if is_paused != pause_scene.is_game_paused:
@@ -194,7 +196,7 @@ func increase_fov():
 	if current_fov < increased_fov:
 		current_fov += 0.1
 		change_fov(current_fov)
-	
+
 
 func decrease_fov():
 	current_fov = player_camera.fov

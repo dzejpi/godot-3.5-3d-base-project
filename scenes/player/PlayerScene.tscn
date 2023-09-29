@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scenes/player_ui/GameOverScene.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/player_ui/PauseScene.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/player_ui/GameWonScene.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/player_ui/TypewriterDialogScene.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scripts/player/PlayerScript.gd" type="Script" id=5]
+[ext_resource path="res://scenes/player_ui/ToolTipScene.tscn" type="PackedScene" id=6]
 
 [sub_resource type="Animation" id=2]
 resource_name = "Head Bob"
@@ -110,3 +111,5 @@ visible = false
 [node name="PlayerUI" type="Node2D" parent="UI"]
 
 [node name="TypewriterDialog" parent="UI/PlayerUI" instance=ExtResource( 4 )]
+
+[node name="Tooltip" parent="UI/PlayerUI" instance=ExtResource( 6 )]

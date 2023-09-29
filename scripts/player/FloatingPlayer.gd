@@ -13,6 +13,7 @@ onready var player_camera = $PlayerCamera
 # UI
 onready var player_ui = $UI/PlayerUI
 onready var typewriter_dialog = $UI/PlayerUI/TypewriterDialog
+onready var tooltip = $UI/PlayerUI/Tooltip
 
 # Movement speed
 var default_speed = 100.0
@@ -45,8 +46,8 @@ func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	transition_overlay.fade_out()
 	check_game_end()
-	
-	
+
+
 func _process(_delta):
 	check_game_end()
 	check_pause_update()
@@ -79,7 +80,7 @@ func _input(event):
 	if Input.is_action_just_pressed("game_pause"):
 		if !is_game_over && !is_game_won:
 			handle_pause_change()
-	
+
 
 func _physics_process(delta):
 	var move_direction_forward = Vector3(0, 0, 0)
@@ -106,7 +107,7 @@ func _physics_process(delta):
 		
 		var motion_forward = move_direction_forward * current_speed * delta
 		motion_forward += gravity * delta
-
+		
 		motion_forward = move_and_slide(motion_forward, Vector3(0, 1, 0))
 		
 		# Set the default speed back so that the sprint does not have influence on other directions
@@ -128,7 +129,7 @@ func _physics_process(delta):
 		
 		var motion = move_direction * current_speed * delta
 		motion += gravity * delta
-
+		
 		motion = move_and_slide(motion, Vector3(0, 1, 0))
 
 
@@ -193,7 +194,7 @@ func increase_fov():
 	if current_fov < increased_fov:
 		current_fov += 0.025
 		change_fov(current_fov)
-	
+
 
 func decrease_fov():
 	current_fov = player_camera.fov
