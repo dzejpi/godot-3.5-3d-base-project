@@ -118,8 +118,9 @@ func _physics_process(delta):
 		gravity_vector = Vector3.UP * jump
 
 	if Input.is_action_pressed("move_sprint"):
-		increase_fov()
-		velocity = velocity.linear_interpolate(direction * speed * 2, acceleration * delta)
+		if !is_game_over && !is_game_won && !is_paused:
+			increase_fov()
+			velocity = velocity.linear_interpolate(direction * speed * 2, acceleration * delta)
 	else:
 		decrease_fov()
 		velocity = velocity.linear_interpolate(direction * speed, acceleration * delta)
@@ -128,9 +129,9 @@ func _physics_process(delta):
 	movement.x = velocity.x + gravity_vector.x
 	movement.y = gravity_vector.y
 	
-	var _player_movement = move_and_slide(movement, Vector3.UP)
-	
 	if !is_game_over && !is_game_won && !is_paused:
+		var _player_movement = move_and_slide(movement, Vector3.UP)
+		
 		if direction != Vector3():
 			animation_player.play("Head Bob")
 
@@ -144,7 +145,7 @@ func handle_on_click_pause_change():
 	if pause_scene.is_game_paused:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		is_paused = pause_scene.is_game_paused
-			
+		
 		pause_scene.show()
 		player_ui.hide()
 	else:
@@ -167,7 +168,7 @@ func handle_pause_change():
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		pause_scene.is_game_paused = true
 		is_paused = pause_scene.is_game_paused
-	
+		
 		pause_scene.show()
 		player_ui.hide()
 
