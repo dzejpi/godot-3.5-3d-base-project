@@ -1,6 +1,10 @@
 extends KinematicBody
 
 
+const SPEED = 5.0
+const JUMP_VELOCITY = 4.5
+
+
 onready var player_head = $PlayerHead
 onready var ray = $PlayerHead/RayCast
 
@@ -19,10 +23,6 @@ onready var tooltip = $UI/PlayerUI/Tooltip
 
 var is_game_over = false
 var is_game_won = false
-
-var speed = 6
-var jump = 6
-var gravity = 16
 
 var basic_fov = 90
 var increased_fov = 91
@@ -46,6 +46,8 @@ var is_paused = false
 # Name of the observed object for debugging purposes
 var observed_object = "" 
 
+var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+
 
 func _ready():
 	is_paused = false
@@ -56,27 +58,6 @@ func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	transition_overlay.fade_out()
 	check_game_end()
-
-
-func _input(event):	
-	if !pause_scene.is_game_paused && !is_game_over && !is_game_won:
-		
-		# Hack that mostly forces the game to capture cursor in HTML5 after player presses Escape
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		
-		if event is InputEventMouseMotion:
-			rotation_degrees.y -= event.relative.x * mouse_sensitivity / 10
-			player_head.rotation_degrees.x = clamp(player_head.rotation_degrees.x - event.relative.y * mouse_sensitivity / 10, -90, 90)
-
-		direction = Vector3()
-		direction.z = -Input.get_action_strength("move_up") + Input.get_action_strength("move_down")
-		direction.x = -Input.get_action_strength("move_left") + Input.get_action_strength("move_right")
-		direction = direction.normalized().rotated(Vector3.UP, rotation.y)
-		
-	# Handling the options menu
-	if Input.is_action_just_pressed("game_pause"):
-		if !is_game_over && !is_game_won:
-			handle_pause_change()
 
 
 func _process(_delta):
@@ -100,42 +81,63 @@ func _process(_delta):
 
 
 func _physics_process(delta):
-	if is_on_floor():
-		gravity_vector = -get_floor_normal() * slide_prevention
-		acceleration = ground_acceleration
+	# Gravity
+	if not is_on_floor():
+		velocity.y -= gravity * delta
+		is_on_ground = false
+	else:
 		if !is_on_ground:
+			is_on_ground = true
 			animation_player.play("Jump Land")
 		
-		is_on_ground = true
-	else:
-		if is_on_ground:
-			gravity_vector = Vector3.ZERO
-			is_on_ground = false
-		else:
-			gravity_vector += Vector3.DOWN * gravity * delta
-			acceleration = air_acceleration
-	
+	# Jump
 	if Input.is_action_just_pressed("move_jump") and is_on_floor():
-		is_on_ground = false
-		gravity_vector = Vector3.UP * jump
-
-	if Input.is_action_pressed("move_sprint"):
-		if !is_game_over && !is_game_won && !is_paused:
-			increase_fov()
-			velocity = velocity.linear_interpolate(direction * speed * 2, acceleration * delta)
+		velocity.y = JUMP_VELOCITY
+	
+	# Input direction
+	var input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	
+	if direction:
+		if Input.is_action_pressed("move_sprint"):
+			if !pause_scene.is_game_paused && !is_game_over && !is_game_won:
+				increase_fov()
+				velocity.x = direction.x * SPEED * 2
+				velocity.z = direction.z * SPEED * 2
+			else:
+				decrease_fov()
+				velocity.x = direction.x * 0
+				velocity.z = direction.z * 0
+		else:
+			decrease_fov()
+			if !pause_scene.is_game_paused && !is_game_over && !is_game_won:
+				velocity.x = direction.x * SPEED
+				velocity.z = direction.z * SPEED
+			else:
+				velocity.x = direction.x * 0
+				velocity.z = direction.z * 0
 	else:
-		decrease_fov()
-		velocity = velocity.linear_interpolate(direction * speed, acceleration * delta)
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+		velocity.z = move_toward(velocity.z, 0, SPEED)
 	
-	movement.z = velocity.z + gravity_vector.z
-	movement.x = velocity.x + gravity_vector.x
-	movement.y = gravity_vector.y
-	
-	if !is_game_over && !is_game_won && !is_paused:
-		var _player_movement = move_and_slide(movement, Vector3.UP)
+	move_and_slide(velocity, Vector3.UP)
+
+
+func _input(event):
+	# Looking around
+	if !pause_scene.is_game_paused && !is_game_over && !is_game_won:
 		
-		if direction != Vector3():
-			animation_player.play("Head Bob")
+		# Hack that usually forces the game to capture cursor in HTML5 after player presses Escape and then goes back
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		
+		if event is InputEventMouseMotion:
+			rotation_degrees.y -= event.relative.x * mouse_sensitivity / 10
+			player_head.rotation_degrees.x = clamp(player_head.rotation_degrees.x - event.relative.y * mouse_sensitivity / 10, -90, 90)
+	
+	# Handling the options menu
+	if Input.is_action_just_pressed("game_pause"):
+		if !is_game_over && !is_game_won:
+			handle_pause_change()
 
 
 func check_pause_update():
