@@ -101,9 +101,12 @@ func _physics_process(delta):
 	if direction:
 		if Input.is_action_pressed("move_sprint"):
 			if !pause_scene.is_game_paused && !is_game_over && !is_game_won:
-				increase_fov()
-				velocity.x = direction.x * SPEED * 2
-				velocity.z = direction.z * SPEED * 2
+				if is_on_ground:
+					increase_fov()
+					velocity.x = direction.x * SPEED * 2
+					velocity.z = direction.z * SPEED * 2
+				else:
+					decrease_fov()
 			else:
 				decrease_fov()
 				velocity.x = direction.x * 0
