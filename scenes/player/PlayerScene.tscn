@@ -89,7 +89,7 @@ enabled = true
 cast_to = Vector3( 0, 0, -3 )
 collide_with_areas = true
 
-[node name="CollisionBodyCapsule" type="CollisionShape" parent="."]
+[node name="PlayerCollisionBody" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 shape = SubResource( 1 )
 
