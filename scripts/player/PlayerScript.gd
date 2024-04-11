@@ -81,7 +81,9 @@ func _input(event):
 
 func _process(_delta):
 	check_game_end()
-	check_pause_update()
+	
+	if is_paused:
+		check_pause_update()
 	
 	# If player is looking at something
 	if ray.is_colliding():
