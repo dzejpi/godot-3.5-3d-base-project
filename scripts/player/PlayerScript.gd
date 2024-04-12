@@ -35,10 +35,7 @@ var acceleration = ground_acceleration
 var slide_prevention = 10
 var mouse_sensitivity = 0.75
 
-var direction = Vector3()
 var velocity = Vector3()
-var movement = Vector3()
-var gravity_vector = Vector3()
 
 var is_on_ground = true
 var is_paused = false
