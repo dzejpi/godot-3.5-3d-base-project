@@ -105,6 +105,7 @@ func _physics_process(delta):
 				velocity.x = direction.x * 0
 				velocity.z = direction.z * 0
 	else:
+		decrease_fov()
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 	
