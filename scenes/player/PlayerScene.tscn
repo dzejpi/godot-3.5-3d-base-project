@@ -68,13 +68,14 @@ tracks/1/keys = {
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.4
+height = 1.1
 
 [node name="Player" type="KinematicBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
 script = ExtResource( 5 )
 
 [node name="PlayerHead" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
 
 [node name="PlayerCamera" type="Camera" parent="PlayerHead"]
 fov = 90.0
