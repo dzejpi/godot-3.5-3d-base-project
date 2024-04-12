@@ -62,22 +62,10 @@ func _ready():
 
 func _process(_delta):
 	check_game_end()
+	process_collisions()
 	
 	if is_paused:
 		check_pause_update()
-	
-	# If player is looking at something
-	if ray.is_colliding():
-		var collision_object = ray.get_collider().name
-		
-		if collision_object != observed_object:
-			observed_object = collision_object
-			print("Player is looking at: " + observed_object + ".")
-	else:
-		var collision_object = "nothing"
-		if collision_object != observed_object:
-			observed_object = collision_object
-			print("Player is looking at: nothing.")
 
 
 func _physics_process(delta):
@@ -216,3 +204,18 @@ func decrease_fov():
 
 func change_fov(player_current_fov):
 	player_camera.fov = player_current_fov
+
+
+func process_collisions():
+	# If player is looking at something
+	if ray.is_colliding():
+		var collision_object = ray.get_collider().name
+		
+		if collision_object != observed_object:
+			observed_object = collision_object
+			print("Player is looking at: " + observed_object + ".")
+	else:
+		var collision_object = "nothing"
+		if collision_object != observed_object:
+			observed_object = collision_object
+			print("Player is looking at: nothing.")
